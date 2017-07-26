@@ -6,12 +6,17 @@
                     <img class="hoja" src="<?PHP echo base_url();?>assets/img/login_hoja.png">
                 </div>
             </div>
+            <div class="row hoja">
+            <div class="hoja2 col s12 m0 l12">
+                <img class="login-innova" src="<?PHP echo base_url();?>assets/img/login_logo_innva.png">
+            </div>
+        </div>
 
         </div>
         <div class="col center s12 l5">
             <form class="form" method="post" action="<?php echo base_url('index.php/login')?>">
                 <div class="row login-logo center">
-                        <img class="login-innova" src="<?PHP echo base_url();?>assets/img/login_logo_innva.png">
+                        <img class="login-innova" src="<?PHP echo base_url();?>assets/img/Logo-Temp.png">
                 </div>
                 <div  class=" row">
                     <div class="input-field col s6 m6 l6 offset-l3 offset-m3 offset-s3">
