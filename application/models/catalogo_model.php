@@ -67,7 +67,7 @@ class Catalogo_model extends CI_Model
             $R = $query->row();
             $data = array('IdCT'   =>  $R->IdCT,
                 'Nombre' =>  strtoupper($this->nombreUTF8($nombre)),
-                'Puntos' =>  $puntos,
+                'Nombre2' =>  $puntos,
                 'Estado' =>  0);
             if  ($img1!='' && $img2 !=''){
                 $data = array('IdCT'   =>  $R->IdCT,

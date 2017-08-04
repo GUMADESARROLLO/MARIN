@@ -1089,13 +1089,15 @@ li img{
     max-width: 100%;
 }
 .descripImg{
-    text-align: center;
+    text-align: left;
     }
+
 .codP{
     color: #831f82;
     font-family: 'robotobold';
     font-size: 17px;
     margin: 0;
+    text-align: center;
 }
 .descript{
     color: #831f82;

@@ -62,10 +62,11 @@
                                                 <p><img class='circle responsive-img' src=".base_url()."assets/img/catalogo/".$key['v_IMG'.$i]." alt=''></p>
 
                                                 <p><img class='circle responsive-img' src=".base_url()."assets/img/catalogo/".$key['v_IMG2'.$i]." alt=''></p>
-                                                <div class='descripImg'>
-                                                    <p class='codP'> ".$key['v_IdIMG'.$i]."</p>
-                                                     <p class='descript'>".$key['v_Nombre'.$i]."</p>
-                                                    <p class='descript'>".str_replace(array("/A%", "/E%","/I%","/O%","/U%","/-%"),array("á", "é", "í","ó","ú","ñ"),  $key['v_Nombre2'.$i])."</p>";
+                                                <p class='codP'> ".$key['v_IdIMG'.$i]."</p>
+                                                <div class='descripAling'>
+                                                    
+                                                     <p class='descripAling'>".$key['v_Nombre'.$i]."</p>
+                                                    <p class='descripAling'>".str_replace(array("/A%", "/E%","/I%","/O%","/U%","/-%"),array("á", "é", "í","ó","ú","ñ"),  $key['v_Nombre2'.$i])."</p>";
 
                                                 echo"</div>
                                         
@@ -156,7 +157,7 @@
                         </div>
                         <div class="input-field col s6 l6">
                             <input name="Und" min=0 step="any" id="UndArto" type="text" class="validate">
-                            <label for="ArtoUnd">UND</label><label id="lblUnd" class="labelValidacion">DIGITE LA UNIDAD</label>
+                            <label for="ArtoUnd">U/M</label><label id="lblUnd" class="labelValidacion">DIGITE LA UNIDAD</label>
                         </div>
                     </div>
                     <div class="row center">
