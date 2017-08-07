@@ -59,8 +59,12 @@
 
                                     if ($key['v_Puntos'.$i]!="0" and $key['v_Nombre'.$i]!="") {
                                         echo "<td>
+
                                                 <div class='row center'>
                                                     <div class='card'>
+                                                    <div class='row' >
+                                                    <a class='right' href='#' onclick='darBaja(".'"'.$key['v_IdIMG'.$i].'","'.$key['v_IdCT'.$i].'"'.")'><i class='material-icons'>highlight_off</i></a>
+                                                </div>
                                                         <div class=' card-image' >
                                                             <img style='display: inline' class='center circle responsive-img' src=".base_url()."assets/img/catalogo/".$key['v_IMG'.$i]." alt=''>
                                                         </div>
