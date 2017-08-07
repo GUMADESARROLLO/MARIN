@@ -726,7 +726,7 @@ table tr:nth-child(even) {
     width: 94%;
     height: 175px;
 }
-#obser{
+#obser,#PtArto,#NombArto{
     border: 1px solid #6a4ad5;
     box-shadow: none;
     font-family: 'robotoregular';

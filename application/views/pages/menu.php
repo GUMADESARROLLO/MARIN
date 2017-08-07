@@ -23,27 +23,21 @@
                       </ul>';
 
             if ($this->session->userdata('IdRol')==1){
-              $menuH .= '<a href="Main"><li href="Main"><i class="material-icons">home</i> inicio</li></a>
+              $menuH .= '
                         <a href="Catalogo"><li href="Catalogo"><i class="material-icons">dashboard</i> catálogo</li></a>
                         <a href="Usuarios"><li href="Usuarios"><i class="material-icons">account_box</i> usuarios</li></a>
                         <a class="modal-trigger" href="#modalAcercaDe"><li href="#"><i class="material-icons">info_outline</i> acerca de</li></a>
                         <a href="salir"><li><i class="material-icons">exit_to_app</i> cerrar sesión</li></a>';
                 
               }else if($this->session->userdata('IdRol')==2){
-                $menuH .= '<a href="Main"><li href="Main"><i class="material-icons">home</i> inicio</li></a>
+                $menuH .= '
                         <a href="Catalogo"><li href="Catalogo"><i class="material-icons">dashboard</i> catálogo</li></a>
                         <a class="modal-trigger" href="#modalAcercaDe"><li href="#"><i class="material-icons">info_outline</i> acerca de</li></a>
                         <a href="salir"><li><i class="material-icons">exit_to_app</i> cerrar sesión</li></a>';
               }else if( $this->session->userdata('IdRol')==3){
-                $menuH .= '<a href="Main"><li href="Main"><i class="material-icons">home</i> inicio</li></a>
-                        <a href="Facturas"><li href="Facturas"><i class="material-icons">remove_circle</i> Facturas</li></a>
-                        <a href="Clientes"><li href="Clientes"><i class="material-icons">supervisor_account</i> clientes</li></a>
-                        <a href="PuntosClientes"><li href="PuntosClientes"><i class="material-icons">content_copy</i> puntos clientes</li></a>
-                        <a href="Catalogo"><li href="Catalogo"><i class="material-icons">dashboard</i> catálogo</li></a>
-                        <a href="Reportes"><li href="Reportes"><i class="material-icons">description</i> reportes</li></a>';
-                echo $menuF; 
+                echo $menuF;
               }else if($this->session->userdata('IdRol')==7){
-                $menuH .= '<a href="Main"><li href="Main"><i class="material-icons">home</i> inicio</li></a>
+                $menuH .= '
                         <a href="Clientes"><li href="Clientes"><i class="material-icons">supervisor_account</i> clientes</li></a>
                         <div id="sac"><img src="'.base_url().'assets/img/sac_atencion.png" alt="Icon" /></div>';
               echo $menuF; 
@@ -64,12 +58,9 @@
       <div class="row noMargen TextColor center">
             <div class="col s12 m12 l12">ACERCA DE</div>
       </div>
-      <div class="row">
-        <div class="col s3 m2 l2 offset-m5 offset-s4">
-          <img id="logo" src="<?PHP echo base_url();?>assets/img/spinnova_logo.png" width="120%">
-        </div>
-        <div class="col l9 TextColor center">
-            <div class="col s12 m12 l12">DESARROLLADO POR GERENCIA CORPORATIVA IT (505) 2278-8787, EXT: 131</div>
+      <div class="row center">
+        <div class="col l12 TextColor center">
+            <div class="col s12 m12 l12">DESARROLLADO POR GERENCIA CORPORATIVA IT <br>(505) 2278-8787, EXT: 131</div>
         </div>
       </div>
       <div class="row foterAcercaDe center">

@@ -23,7 +23,13 @@
 
             <div class="right derecha col s12 m12 l7">
 
-                <a class='redondo dropdown-button btn' href='#' id="subir" data-activates='dropdown1'><i class="material-icons right">insert_invitation</i>CREAR</a>
+                <?php
+                if($this->session->userdata('IdRol')!= 5){
+                    echo "<a class='redondo dropdown-button btn' href='#' id='subir' data-activates='dropdown1'><i class='material-icons right'>insert_invitation</i>CREAR</a>";
+                }
+                ?>
+
+
 
                 <input id="txtCount" type="hidden" value="<?php echo $countItem;?>">
 
@@ -52,27 +58,25 @@
                                 for($i=1; $i<5; ++$i){
 
                                     if ($key['v_Puntos'.$i]!="0" and $key['v_Nombre'.$i]!="") {
-
                                         echo "<td>
-                                            <div class='images_ca'>
-                                                <div class='row' >
-                                                    <a class='right' href='#' onclick='darBaja(".'"'.$key['v_IdIMG'.$i].'","'.$key['v_IdCT'.$i].'"'.")'><i class='material-icons'>highlight_off</i></a>
-                                                </div>
+                                                <div class='row center'>
+                                                    <div class='card'>
+                                                        <div class=' card-image' >
+                                                            <img style='display: inline' class='center circle responsive-img' src=".base_url()."assets/img/catalogo/".$key['v_IMG'.$i]." alt=''>
+                                                        </div>
+                                                        <div class='card-content'>
+                                                            <p>
+                                                          ".$key['v_Ubicacion'.$i]."
+                                                            </p>
+                                                        </div>
+                                                        <div class='card-action'>
+                                                            <a href='#' onclick = 'editarArticulo(".'"'.$key['v_IMG2'.$i].'","'.''.$key['v_IMG'.$i].'","'.$key['v_IdIMG'.$i].'","'.str_replace(array("/A%", "/E%","/I%","/O%","/U%","/-%",'"'),array("á", "é", "í","ó","ú","ñ","pulg"),  $key['v_Nombre'.$i]).'","'.$key['v_Nombre2'.$i].'","'.$key['v_Und'.$i].'","'.$key['v_Puntos'.$i].'"'.',"'.$key['v_Ubicacion'.$i].'"'.")' id='modificar' class='btn'>Detalles</a>
 
-                                                <p><img class='circle responsive-img' src=".base_url()."assets/img/catalogo/".$key['v_IMG'.$i]." alt=''></p>
+                                                        </div>
+                                                    </div>
 
-                                                <p><img class='circle responsive-img' src=".base_url()."assets/img/catalogo/".$key['v_IMG2'.$i]." alt=''></p>
-                                                <p class='codP'> ".$key['v_IdIMG'.$i]."</p>
-                                                <div class='descripAling'>
-                                                    
-                                                     <p class='descripAling'>".$key['v_Nombre'.$i]."</p>
-                                                    <p class='descripAling'>".str_replace(array("/A%", "/E%","/I%","/O%","/U%","/-%"),array("á", "é", "í","ó","ú","ñ"),  $key['v_Nombre2'.$i])."</p>";
+                                            </div></td>";
 
-                                                echo"</div>
-                                        
-                                                <a href='#' onclick = 'editarArticulo(".'"'.$key['v_IMG2'.$i].'","'.''.$key['v_IMG'.$i].'","'.$key['v_IdIMG'.$i].'","'.str_replace(array("/A%", "/E%","/I%","/O%","/U%","/-%",'"'),array("á", "é", "í","ó","ú","ñ","pulg"),  $key['v_Nombre'.$i]).'","'.$key['v_Nombre2'.$i].'","'.$key['v_Und'.$i].'","'.$key['v_Puntos'.$i].'"'.")' id='modificar' class='btn'>modificar</a>
-                                            </div>
-                                        </td>";
                                     } else {
                                         echo "<td></td>";
                                     }
@@ -127,7 +131,7 @@
     <div class="modal-content">
         <div class="row TextColor center">
             <div class="col s5 m8 l12">
-                ingreso de artículo
+                Detalle de articulo
             </div>
         </div>
      
@@ -136,30 +140,38 @@
                 <input id="bandera" name="bandera" type="hidden" value="0">
 
 
-                
                 <div class="">
                     <div id="articulo" class="row">
                         <div class="input-field col s6 l6 ">
                             <input  id="codigoArto"  onmousedown="return false" onkeydown="return false"  name="codigo" type="text" class="validate">
                             <label for="codigoArto">ID:</label><label id="labelCodigo" class="labelValidacion">REQUERIDO</label>
                         </div>
-                    
-                        <div class="input-field col s6 l6">
-                            <input name="nombre" id="NombArto" type="text" class="validate mayuscula">
-                            <label for="NombArto">Descrip. ESP</label><label id="labelDescripcion" class="labelValidacion">REQUERIDO</label>
-                        </div>
-                    </div>
-          
-                    <div class="row">
-                        <div class="input-field col s6 l6">
-                            <input name="puntos" min=0 step="any" id="PtArto" type="text" class="validate">
-                            <label for="PtArto">Descrip ENG</label><label id="labelPuntos" class="labelValidacion">REQUERIDO</label>
-                        </div>
                         <div class="input-field col s6 l6">
                             <input name="Und" min=0 step="any" id="UndArto" type="text" class="validate">
                             <label for="ArtoUnd">U/M</label><label id="lblUnd" class="labelValidacion">DIGITE LA UNIDAD</label>
                         </div>
                     </div>
+          
+                    <div class="row">
+                        <div class="input-field col s6 l6">
+                            <p class="Datos">Descrip ENG</p>
+                            <textarea name="puntos" id="PtArto" class="materialize-textarea observaciones validate" style="height: 16px;"></textarea>
+                            <label id="labelPuntos" class="labelValidacion">REQUERIDO</label>
+                        </div>
+                        <div class="input-field col s6 l6">
+                            <p class="Datos">Descrip ESP</p>
+                            <textarea name="nombre" id="NombArto" class="materialize-textarea observaciones validate" style="height: 16px;"></textarea>
+                            <label id="labelDescripcion" class="labelValidacion">REQUERIDO</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <p class="Datos">UBICACION:</p>
+                            <textarea id="obser" name="ubicacion" class="materialize-textarea observaciones" style="height: 16px;"></textarea>
+                        </div>
+                    </div>
+
                     <div class="row center">
                         <div class="cosa">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -167,15 +179,18 @@
                                 <div id="ImgContenedor" class="fileinput-preview fileinput-exists thumbnail" style="max-width:250px; max-height:150px;"></div>
 
                                 <div class="center">
-                                    <label id="labelImagen" class="labelValidacion">PRINCIPAL IMAGEN</label>
-                                    <label id="labelImagen3" class="labelValidacion">EL CÓDIGO NO COINCIDE</label>
-                                </div>
-
-                                <div class="center">
-                            <span id="cargar" class="btn btn-default btn-file"><span class="fileinput-new">principal</span>
-                            <span id="cancel" class="fileinput-exists">cambiar</span>
-                            <input id="txtimagen" type="file" name="txtimagen"></span>
-                                    <a id="cargar22" href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">cancelar</a>
+                                    <?php
+                                    if($this->session->userdata('IdRol')!= 5){
+                                        echo '
+                                        <span id="cargar" class="btn btn-default btn-file"><span class="fileinput-new">principal</span>
+                                        <span id="cancel" class="fileinput-exists">cambiar</span>
+                                        <input id="txtimagen" type="file" name="txtimagen"></span>
+                                        <a id="cargar22" href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">cancelar</a>
+                                        ';
+                                    }else{
+                                        echo '<span id="cargar" class="btn btn-default btn-file"><span class="fileinput-new">principal</span>';
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -190,10 +205,19 @@
                                 </div>
 
                                 <div class="center">
-                                        <span id="cargar" class="btn btn-default btn-file"><span class="fileinput-new">alterna</span>
-                                        <span id="cancel" class="fileinput-exists">cambiar</span>
-                                        <input id="txtimagen2" type="file" name="txtimagen2"></span>
-                                    <a id="cargar22" href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">cancelar</a>
+                                    <?php
+
+                                    if($this->session->userdata('IdRol')!= 5){
+                                        echo '<span id="cargar" class="btn btn-default btn-file"><span class="fileinput-new">alterna</span>
+                                              <span id="cancel" class="fileinput-exists">cambiar</span>
+                                              <input id="txtimagen2" type="file" name="txtimagen2"></span>
+                                              <a id="cargar22" href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">cancelar</a>';
+                                    }else{
+                                        echo '<span id="cargar" class="btn btn-default btn-file"><span class="fileinput-new">alterna</span>';
+                                    }
+                                    ?>
+
+
                                 </div>
 
                             </div>
@@ -201,7 +225,13 @@
                         </div>
 
                         <div class="col offset-l10 offset-m5 offset-s4 l2 valign-wrapper" >
-                            <a id="agregar" class="waves-effect btn-file waves-light btn" onclick="subirimagen()">GUARDAR</a>
+                            <?php
+
+                            if($this->session->userdata('IdRol')!= 5){
+                                echo '<a id="agregar" class="waves-effect btn-file waves-light btn" onclick="subirimagen()">GUARDAR</a>';
+                            }
+                            ?>
+
                             <div id="loadIMG" style="display:none" class="preloader-wrapper big active">
                                 <div class="spinner-layer spinner-blue-only">
                                     <div class="circle-clipper left"><div class="circle"></div></div>
@@ -474,5 +504,12 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="modal1" class="modal" style="min-height: 50%">
+    <div class="modal-content">
+        <div id="imgView" class="fileinput-new thumbnail" style="width: 250px; height: 150px; padding: 5px 0 10px !important;"></div>
+        <div id="imgView" class="fileinput-preview fileinput-exists thumbnail" style="max-width:250px; max-height:150px;"></div>
     </div>
 </div>

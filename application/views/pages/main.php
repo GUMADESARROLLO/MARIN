@@ -71,8 +71,9 @@
 
 </div>
 
-<div id="modal1" class="modal">
+<div id="modal1" class="modal" style="height: 300px">
     <div class="modal-content">
         <img id="idViewImg" width="100%" height="100%" >
+
     </div>
 </div>

@@ -21,7 +21,6 @@ class Catalogo_controller extends CI_Controller
       $data['bandera'] = $this->catalogo_model->bandera();
       $data['catActual'] = $this->catalogo_model->traerCatalogosActual();
       $data['countItem'] = $this->catalogo_model->countItem();
-
       $this->load->view('pages/catalogo/Catalogo',$data);
       $this->load->view('footer/footer');
     }
@@ -156,7 +155,7 @@ class Catalogo_controller extends CI_Controller
             move_uploaded_file($tmp2,$name2);
             $flag2 = $_FILES['txtimagen2']['name'];
         }
-        $this->catalogo_model->editarArticulo($_POST['codigo'],$_POST['nombre'],0,$_POST['puntos'],$flag,$flag2);
+        $this->catalogo_model->editarArticulo($_POST['codigo'],$_POST['nombre'],0,$_POST['puntos'],$flag,$flag2,$_POST['ubicacion']);
         redirect('Catalogo','refresh');
 
       /*if (is_uploaded_file($tmp)){
@@ -183,7 +182,7 @@ class Catalogo_controller extends CI_Controller
             $flag2 = $_FILES['txtimagen2']['name'];
         }
 
-        $this->catalogo_model->guardarIMG($_POST['codigo'],$_POST['nombre'],$flag,$flag2,$_POST['puntos'],$_POST['Und']);
+        $this->catalogo_model->guardarIMG($_POST['codigo'],$_POST['nombre'],$flag,$flag2,$_POST['puntos'],$_POST['Und'],$_POST['ubicacion']);
         redirect('Catalogo','refresh');
 
    	}

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-07-2017 a las 09:09:16
+-- Tiempo de generación: 07-08-2017 a las 13:30:17
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.23
 
@@ -31,6 +31,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `pc_Catalogo` (IN `CATALOGO` INT)  B
 		DECLARE v_IdCT, v_CodImg, v_Puntos,v_Desc 	INT;
 		DECLARE v_Nombre VARCHAR(255);
 		DECLARE v_Nombre2 VARCHAR(255);
+		DECLARE v_Ubicacion VARCHAR(255);
 		DECLARE v_Imagen VARCHAR(150);
 	  DECLARE v_Imagen2 VARCHAR(150);
 		DECLARE v_Und VARCHAR(10);
@@ -42,7 +43,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `pc_Catalogo` (IN `CATALOGO` INT)  B
 		DECLARE RELLENO, errores INT DEFAULT 0;
 		
 		DECLARE data_cursor CURSOR FOR 
-			SELECT detallect.IdCT, detallect.IdIMG, detallect.Nombre,detallect.Nombre2, detallect.IMG,detallect.IMG2,detallect.UndArti, detallect.Puntos,detallect.Descuento
+			SELECT detallect.IdCT, detallect.IdIMG, detallect.Nombre,detallect.Nombre2,detallect.Ubicacion, detallect.IMG,detallect.IMG2,detallect.UndArti, detallect.Puntos,detallect.Descuento
 			FROM detallect
 			WHERE detallect.IdCT = CATALOGO AND detallect.Estado <> 1
 			ORDER BY detallect.IdIMG;
@@ -53,11 +54,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `pc_Catalogo` (IN `CATALOGO` INT)  B
         IF RELLENO <> 0 THEN
           OPEN data_cursor;
                read_data: LOOP
-                          FETCH data_cursor INTO v_IdCT, v_CodImg, v_Nombre,v_Nombre2, v_Imagen,v_Imagen2,v_Und,v_Puntos,v_Desc;
+                          FETCH data_cursor INTO v_IdCT, v_CodImg, v_Nombre,v_Nombre2,v_Ubicacion, v_Imagen,v_Imagen2,v_Und,v_Puntos,v_Desc;
 				
 				           IF errores = 1 THEN LEAVE read_data; END IF;
                 
-				           SET CSQL = CONCAT(CSQL, v_IdCT, ",", v_CodImg, ",'", v_Nombre, "','",v_Nombre2,"','", v_Imagen,"','",v_Imagen2,"','",v_Und, "','", v_Puntos,"',",v_Desc);
+				           SET CSQL = CONCAT(CSQL, v_IdCT, ",", v_CodImg, ",'", v_Nombre, "','",v_Nombre2, "','",v_Ubicacion,"','", v_Imagen,"','",v_Imagen2,"','",v_Und, "','", v_Puntos,"',",v_Desc);
                 
 				           IF cont = 4 THEN                    
                               IF conse = RELLENO THEN
@@ -82,7 +83,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `pc_Catalogo` (IN `CATALOGO` INT)  B
                SET CSQL = CONCAT(CSQL, ",");
                
 			   WHILE RELLENO <> 0 DO
-			         SET CSQL = CONCAT(CSQL, "'0','0','','','','','','0','0'");
+			         SET CSQL = CONCAT(CSQL, "'0','0','','','','','','','0','0'");
             		 SET RELLENO = RELLENO - 1;
                 
 				     IF RELLENO <> 0 THEN
@@ -199,9 +200,10 @@ INSERT INTO `catrol` (`IdRol`, `Descripcion`, `Estado`) VALUES
 DROP TABLE IF EXISTS `detallect`;
 CREATE TABLE `detallect` (
   `IdCT` int(11) DEFAULT NULL,
-  `IdIMG` varchar(150) DEFAULT NULL,
-  `Nombre` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `IdIMG` varchar(200) DEFAULT NULL,
+  `Nombre` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `Nombre2` varchar(150) DEFAULT NULL,
+  `Ubicacion` varchar(450) DEFAULT NULL,
   `IMG` varchar(150) DEFAULT NULL,
   `IMG2` varchar(150) DEFAULT NULL,
   `Puntos` varchar(150) DEFAULT NULL,
@@ -214,12 +216,18 @@ CREATE TABLE `detallect` (
 -- Volcado de datos para la tabla `detallect`
 --
 
-INSERT INTO `detallect` (`IdCT`, `IdIMG`, `Nombre`, `Nombre2`, `IMG`, `IMG2`, `Puntos`, `Descuento`, `Estado`, `UndArti`) VALUES
-(22, '1', 'ME VALE', '1', 'noIMG.jpg', 'noIMG.jpg', '1', 1, b'1', 'UND'),
-(22, '2', 'MARTIN', 'martin', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'1', 'undndnn'),
-(22, '3', 'JLJLFDSKJ', 'lskjdflskjd', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'0', 'lksjdflksj'),
-(22, '4', 'DFKJGL/-%KDJFXGL/-%KJ', 'slkñdjfglñkdjf', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'0', 'sdlkfjglsk'),
-(22, '5', '/-%DKLF´/-%GSKDFLKQKG´/-%DLKBW', 'SFÑLGKDÑGKÑFKQQlskd', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'1', 'gggg');
+INSERT INTO `detallect` (`IdCT`, `IdIMG`, `Nombre`, `Nombre2`, `Ubicacion`, `IMG`, `IMG2`, `Puntos`, `Descuento`, `Estado`, `UndArti`) VALUES
+(22, '9', 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'0', 'UM'),
+(22, '2', 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'0', 'UM'),
+(22, '3', 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'0', 'UM'),
+(22, '4', 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'0', 'UM'),
+(22, '5', 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'0', 'UM'),
+(22, '6', 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'0', 'UM'),
+(22, '7', 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'0', 'UM'),
+(22, '8', 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'0', 'UM'),
+(22, '9', 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'0', 'UM'),
+(22, '1', 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', '1', 0, b'0', 'UM'),
+(22, '11', 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', '5.jpg', 'venta-de-tractores-y-repuestos_716f3f7b_3.jpg', '1', 0, b'0', 'UND');
 
 -- --------------------------------------------------------
 
@@ -469,6 +477,7 @@ CREATE TABLE `tmp_catalogo` (
   `v_IdIMG1` int(11) DEFAULT NULL,
   `v_Nombre1` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `v_Nombre21` varchar(255) DEFAULT NULL,
+  `v_Ubicacion1` varchar(255) DEFAULT NULL,
   `v_IMG1` varchar(150) DEFAULT NULL,
   `v_IMG21` varchar(150) DEFAULT NULL,
   `v_Und1` varchar(10) DEFAULT NULL,
@@ -478,6 +487,7 @@ CREATE TABLE `tmp_catalogo` (
   `v_IdIMG2` int(11) DEFAULT NULL,
   `v_Nombre2` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `v_Nombre22` varchar(255) DEFAULT NULL,
+  `v_Ubicacion2` varchar(255) DEFAULT NULL,
   `v_IMG2` varchar(150) DEFAULT NULL,
   `v_IMG22` varchar(150) DEFAULT NULL,
   `v_Und2` varchar(10) DEFAULT NULL,
@@ -487,6 +497,7 @@ CREATE TABLE `tmp_catalogo` (
   `v_IdIMG3` int(11) DEFAULT NULL,
   `v_Nombre3` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `v_Nombre23` varchar(255) DEFAULT NULL,
+  `v_Ubicacion3` varchar(255) DEFAULT NULL,
   `v_IMG3` varchar(150) DEFAULT NULL,
   `v_IMG23` varchar(150) DEFAULT NULL,
   `v_Und3` varchar(10) DEFAULT NULL,
@@ -496,6 +507,7 @@ CREATE TABLE `tmp_catalogo` (
   `v_IdIMG4` int(11) DEFAULT NULL,
   `v_Nombre4` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `v_Nombre24` varchar(255) DEFAULT NULL,
+  `v_Ubicacion4` varchar(255) DEFAULT NULL,
   `v_IMG4` varchar(150) DEFAULT NULL,
   `v_IMG24` varchar(150) DEFAULT NULL,
   `v_Und4` varchar(10) DEFAULT NULL,
@@ -507,8 +519,10 @@ CREATE TABLE `tmp_catalogo` (
 -- Volcado de datos para la tabla `tmp_catalogo`
 --
 
-INSERT INTO `tmp_catalogo` (`v_IdCT1`, `v_IdIMG1`, `v_Nombre1`, `v_Nombre21`, `v_IMG1`, `v_IMG21`, `v_Und1`, `v_Puntos1`, `v_Desc1`, `v_IdCT2`, `v_IdIMG2`, `v_Nombre2`, `v_Nombre22`, `v_IMG2`, `v_IMG22`, `v_Und2`, `v_Puntos2`, `v_Desc2`, `v_IdCT3`, `v_IdIMG3`, `v_Nombre3`, `v_Nombre23`, `v_IMG3`, `v_IMG23`, `v_Und3`, `v_Puntos3`, `v_Desc3`, `v_IdCT4`, `v_IdIMG4`, `v_Nombre4`, `v_Nombre24`, `v_IMG4`, `v_IMG24`, `v_Und4`, `v_Puntos4`, `v_Desc4`) VALUES
-(22, 3, 'JLJLFDSKJ', 'lskjdflskjd', 'noIMG.jpg', 'noIMG.jpg', 'lksjdflksj', 1, 0, 22, 4, 'DFKJGL/-%KDJFXGL/-%KJ', 'slkñdjfglñkdjf', 'noIMG.jpg', 'noIMG.jpg', 'sdlkfjglsk', 1, 0, 0, 0, '', '', '', '', '', 0, 0, 0, 0, '', '', '', '', '', 0, 0);
+INSERT INTO `tmp_catalogo` (`v_IdCT1`, `v_IdIMG1`, `v_Nombre1`, `v_Nombre21`, `v_Ubicacion1`, `v_IMG1`, `v_IMG21`, `v_Und1`, `v_Puntos1`, `v_Desc1`, `v_IdCT2`, `v_IdIMG2`, `v_Nombre2`, `v_Nombre22`, `v_Ubicacion2`, `v_IMG2`, `v_IMG22`, `v_Und2`, `v_Puntos2`, `v_Desc2`, `v_IdCT3`, `v_IdIMG3`, `v_Nombre3`, `v_Nombre23`, `v_Ubicacion3`, `v_IMG3`, `v_IMG23`, `v_Und3`, `v_Puntos3`, `v_Desc3`, `v_IdCT4`, `v_IdIMG4`, `v_Nombre4`, `v_Nombre24`, `v_Ubicacion4`, `v_IMG4`, `v_IMG24`, `v_Und4`, `v_Puntos4`, `v_Desc4`) VALUES
+(22, 1, 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', 'UM', 1, 0, 22, 11, 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', '5.jpg', 'venta-de-tractores-y-repuestos_716f3f7b_3.jpg', 'UND', 1, 0, 22, 2, 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', 'UM', 1, 0, 22, 3, 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', 'UM', 1, 0),
+(22, 4, 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', 'UM', 1, 0, 22, 5, 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', 'UM', 1, 0, 22, 6, 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', 'UM', 1, 0, 22, 7, 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', 'UM', 1, 0),
+(22, 8, 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', 'UM', 1, 0, 22, 9, 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', 'UM', 1, 0, 22, 9, 'LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT. DONEC ODIO. QUISQUE VOLUTPAT MATTIS EROS. NULLAM MALESUADA ERAT UT TURPIS. SUSPENDISSE URNA NIBH, VIVERRA NON, SEMPER SUSCIPIT, POSUERE A, PED', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna ', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.', 'noIMG.jpg', 'noIMG.jpg', 'UM', 1, 0, 0, 0, '', '', '', '', '', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -517,8 +531,8 @@ INSERT INTO `tmp_catalogo` (`v_IdCT1`, `v_IdIMG1`, `v_Nombre1`, `v_Nombre21`, `v
 --
 DROP VIEW IF EXISTS `view_catalogo_activo`;
 CREATE TABLE `view_catalogo_activo` (
-`IdIMG` varchar(150)
-,`Nombre` varchar(255)
+`IdIMG` varchar(200)
+,`Nombre` varchar(200)
 ,`IMG` varchar(150)
 ,`Puntos` double
 ,`Descripcion` varchar(150)

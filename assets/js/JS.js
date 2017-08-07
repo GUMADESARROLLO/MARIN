@@ -1384,11 +1384,19 @@ function subirimagen()
         $( 'img' ).remove( '#quitar' );
         $('#codigoArto').val(parseInt($("#txtCount").val()) + 1 );$('#NombArto').val("");$('#PtArto').val("");
          $('#UndArto').val("");
+         $('#obser').val("");
          $("#txtCount").text();
 
     } );
+    $("#ImgContenedor").click(function(){
+        viewiImg($("#ImgContenedor").html());
+    });
+    $("#ImgContenedor2").click(function(){
+        viewiImg($("#ImgContenedor2").html());
+    });
 
-    function editarArticulo(imagen2,imagen,codigo,descripcion,descripcion2,unidad){
+
+    function editarArticulo(imagen2,imagen,codigo,descripcion,descripcion2,unidad,v,Ubicacion){
 
 
         $('#bandera').val(1);
@@ -1396,6 +1404,7 @@ function subirimagen()
         $('#NombArto').val(descripcion.replace('pulg','"'));
         $('#PtArto').val(descripcion2);
         $('#UndArto').val(unidad);
+        $('#obser').val(Ubicacion);
         $('#nuevoArticulo').openModal();        
         $("#cargar22").trigger("click");
         document.getElementById("ImgContenedor").innerHTML = ['<img id="quitar" src="../assets/img/catalogo/'+imagen+'" title="', escape('Imagen_Actual'), '"/>'].join('');
@@ -1617,6 +1626,6 @@ function subirEXCEL () {//funcion para subir el catalogo atravez de excel
 }
 
 function viewiImg(id){
-    $("#idViewImg").attr("src",id);
+    document.getElementById("imgView").innerHTML = [id].join('');
     $("#modal1").openModal();
 }

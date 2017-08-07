@@ -36,7 +36,7 @@ class Catalogo_model extends CI_Model
         echo json_encode($json);         
     }
 
-    public function guardarIMG($codigo,$nombre,$nombre2,$imagen,$puntos,$UND){
+    public function guardarIMG($codigo,$nombre,$nombre2,$imagen,$puntos,$UND,$Ubicacion){
         $R;
         $this->db->where('Estado',0);
         $query = $this->db->get('catalogo');
@@ -48,6 +48,7 @@ class Catalogo_model extends CI_Model
                           'IdIMG'  =>  $codigo,
                           'Nombre' =>  strtoupper($this->nombreUTF8($nombre)),
                           'Nombre2' =>  $puntos,
+                          'Ubicacion' =>  $Ubicacion,
                           'IMG'    =>   $nombre2,
                           'IMG2'    => $imagen,
                           'Puntos' =>  1,
@@ -57,7 +58,7 @@ class Catalogo_model extends CI_Model
             $this->db->insert('detallect',$data);
         }
     }
-    public function editarArticulo($codigo,$nombre,$imagen,$puntos,$img1,$img2)
+    public function editarArticulo($codigo,$nombre,$imagen,$puntos,$img1,$img2,$ubicacion)
     {
         $R;
         $this->db->where('Estado',0);
@@ -68,6 +69,7 @@ class Catalogo_model extends CI_Model
             $data = array('IdCT'   =>  $R->IdCT,
                 'Nombre' =>  strtoupper($this->nombreUTF8($nombre)),
                 'Nombre2' =>  $puntos,
+                'Ubicacion' =>  $ubicacion,
                 'Estado' =>  0);
             if  ($img1!='' && $img2 !=''){
                 $data = array('IdCT'   =>  $R->IdCT,
